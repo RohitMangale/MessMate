@@ -103,7 +103,7 @@ class Notification(models.Model):
 # Review Table
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    OrderItem = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
     rating = models.IntegerField()  # Assuming rating is out of 5
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

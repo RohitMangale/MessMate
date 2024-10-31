@@ -62,11 +62,11 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "<http://localhost:3000>",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "<http://localhost:3000>",
+# ]
 
-# alt CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # JWT used for auth - copied from jwt website
 SIMPLE_JWT = {
