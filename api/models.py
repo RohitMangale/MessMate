@@ -1,5 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.db.models import Sum
+
+
 
 # UserProfile Table
 class UserProfile(models.Model):
@@ -22,7 +28,9 @@ class Ingredient(models.Model):
     allergen_info = models.BooleanField(default=False)  # True if allergen
     is_vegan = models.BooleanField(default=False)
     is_vegetarian = models.BooleanField(default=False)
-
+    base_unit = models.CharField(max_length=20, null=True, blank=True)  # Base unit for aggregation
+    conversion_factor = models.FloatField(default=1, null=True,blank=True)  # E.g., 1 for grams, 1000 for kg
+    
     def __str__(self):
         return self.name
 
@@ -35,7 +43,7 @@ class Menu(models.Model):
     available = models.BooleanField(default=True)
     serving_time = models.CharField(max_length=100)
     image = models.ImageField(upload_to='menu_images/', blank=True, null=True)  # Path to image file
-
+    # price = models.FloatField(max_digits=10, decimal_places=True)
     def __str__(self):
         return self.item_name
 
@@ -44,7 +52,8 @@ class MenuIngredient(models.Model):
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     quantity = models.FloatField()  # e.g., “2.0” for quantity
-    unit = models.CharField(max_length=20)  # e.g., "tablespoons", "grams"
+    unit = models.CharField(max_length=20, default="grams")  # Base unit for aggregation
+    conversion_factor = models.FloatField(default=1)  # E.g., 1 for grams, 1000 for kg
 
     def __str__(self):
         return f"{self.menu.item_name} - {self.ingredient.name}"
@@ -56,6 +65,7 @@ class Order(models.Model):
         ('preparing', 'Preparing'),
         ('ready', 'Ready for Pickup'),
         ('completed', 'Completed'),
+        ('cancelled','Cancelled'),
     ]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -63,7 +73,9 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
 
+    
     def __str__(self):
         return f"Order {self.id} by {self.user.username}"
 
@@ -123,4 +135,63 @@ class OrderModification(models.Model):
 
     def __str__(self):
         return f"Modification for Order {self.order.id} - {self.modification_type}"
+
+class Bill(models.Model):
+    
+    PAYMENT_CHOICES = [
+        ('Card', 'card'),
+        ('Cash', 'cash'),
+        ('UPI', 'upi')
+    ]
+    PAYMENT_STATUS_CHOICES = [
+        ('paid','Paid'),
+        ('pending','Pending'),
+        ('cancelled','Cancelled'),
+    ]
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    payment_type = models.CharField(max_length=100, choices=PAYMENT_CHOICES, default='Cash')
+    payment_status = models.CharField(max_length=100, choices=PAYMENT_STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class Inventory(models.Model):
+    # Tracks available stock for each ingredient
+    ingredient = models.OneToOneField(Ingredient, on_delete=models.CASCADE)
+    quantity_in_stock = models.FloatField()  # The current stock level for each ingredient
+    unit = models.CharField(max_length=20)   # e.g., "grams", "liters"
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.ingredient.name} - {self.quantity_in_stock} {self.unit}"
+
+
+
+class IngredientRequirement(models.Model):
+    # Tracks the monthly requirement for each ingredient based on orders
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    month = models.DateField()  # e.g., January 2024
+    quantity_required = models.FloatField()  # Total amount required for the month
+
+    def __str__(self):
+        return f"{self.ingredient.name} - {self.month.strftime('%B %Y')} - {self.quantity_required} {self.ingredient.unit}"
+
+
+class InventoryPurchase(models.Model):
+    item_name = models.CharField(max_length=255)  # Name of the raw material or ingredient
+    quantity = models.FloatField()                # Quantity of the purchased item
+    unit = models.CharField(max_length=20)        # Units, e.g., "grams", "kg", "liters"
+    purchase_date = models.DateTimeField(default=timezone.now)  # Time of purchase
+    supplier = models.CharField(max_length=255, blank=True, null=True)  # Optional supplier info
+
+    def __str__(self):
+        return f"{self.quantity} {self.unit} of {self.item_name} purchased on {self.purchase_date}"
+
+class RawMaterialToIngredient(models.Model):
+    raw_material = models.ForeignKey(InventoryPurchase, on_delete=models.CASCADE)  # Link to InventoryPurchase
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)  # Link to Ingredient model
+    conversion_rate = models.FloatField()  # Rate of raw material to ingredient (e.g., 2.5 kg of wheat -> 1 kg of flour)
+
+    def __str__(self):
+        return f"{self.raw_material.item_name} to {self.ingredient.name} conversion"
+
 
