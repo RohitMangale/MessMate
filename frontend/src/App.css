@@ -1,0 +1,25 @@
+.imgGradient{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%), url("https://cdn.usegalileo.ai/stability/13cb830b-5aca-42ba-84b6-1c3b6fda6d04.png")
+}
+
+.scrollable-grid {
+    max-height: calc(2 * 18rem); /* Assuming each item has a height of about 4rem */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+
+  
+  /* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+  .scrollable-grid::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+  }
+  
+  /* Hide scrollbar for Firefox */
+  .scrollable-grid {
+    scrollbar-width: none; /* Hide scrollbar */
+  }
+
+  .shadow-inner {
+    box-shadow: 
+      inset 0 4px 8px rgba(0, 0, 0, 0.2), /* Top inner shadow */
+      inset 0 -2px 4px rgba(255, 255, 255, 0.1); /* Bottom inner shadow (less visible) */
+  }
