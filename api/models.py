@@ -18,6 +18,11 @@ class UserProfile(models.Model):
     role = models.CharField(max_length=10, choices=USER_ROLE_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)  # Optional field for phone number
+    residence = models.CharField(max_length=255, blank=True, null=True)  # Optional field for residence
+    is_college_student = models.BooleanField(default=False)  # Default is No
+    college = models.CharField(max_length=255, blank=True, null=True)  # Optional field for college name
+    lunch_timings = models.CharField(max_length=50, blank=True, null=True)  # Optional field for lunch timings
 
     def __str__(self):
         return self.user.username

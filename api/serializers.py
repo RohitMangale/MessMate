@@ -2,6 +2,39 @@ from rest_framework import serializers
 from .models import (UserProfile, Ingredient, Menu, MenuIngredient, Order, OrderItem,
                      Notification, Review, ExcelUploadLog, OrderModification, Inventory,
                      Bill, IngredientRequirement, InventoryPurchase, RawMaterialToIngredient)
+from django.contrib.auth.models import User,Group
+
+
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+    # Role is now linked to UserProfile
+    role = serializers.ChoiceField(choices=UserProfile.USER_ROLE_CHOICES)
+
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'email', 'role']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        # Extract role from validated data
+        role = validated_data.pop('role')  # Pop role for UserProfile
+        password = validated_data.pop('password')
+
+        # Create the user and set the password
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+
+        # Create the UserProfile with the specified role
+        UserProfile.objects.create(user=user, role=role)
+
+        # Check if role is 'mess_staff' and assign staff status
+        if role == 'mess_staff':
+            user.is_staff = True
+            user.save()
+
+        return user
+
 
 # UserProfile Serializer
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -9,6 +42,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = '__all__'
         read_only_fields = ['created_at', 'updated_at']
+    
+    def validate_role(self, value):
+        # Prevent non-admin users from assigning `mess_staff` role
+        request = self.context.get('request')
+        if value == 'mess_staff' and not (request.user.is_staff or request.user.is_superuser):
+            raise serializers.ValidationError("Only admin users can assign the 'mess_staff' role.")
+        return value
 
 # Ingredient Serializer
 class IngredientSerializer(serializers.ModelSerializer):

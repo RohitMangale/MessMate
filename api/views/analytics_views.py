@@ -1,12 +1,17 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import Count, Sum, Avg, F
+from rest_framework.decorators import api_view, permission_classes
 from django.utils import timezone
 from datetime import timedelta
 from api.models import Order, OrderItem, Menu, Review
 from django.db.models.functions import TruncDay, TruncWeek, TruncMonth, TruncYear, TruncHour
 from rest_framework import status  # Import status for HTTP response codes
 from django.db.models.functions import TruncHour, TruncMinute
+from api.permissions import IsMessStaff, IsOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+
+
 # Helper function to get the date range based on timeframe
 def get_date_range(timeframe):
     now = timezone.now()
@@ -22,6 +27,8 @@ def get_date_range(timeframe):
         raise ValueError("Invalid timeframe. Use 'daily', 'weekly', 'monthly', or 'yearly'.")
     return start_date, now
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def average_rating(menu_item_id, start_date, end_date):
     average = (
         Review.objects
@@ -30,6 +37,9 @@ def average_rating(menu_item_id, start_date, end_date):
     )
     return average['rating__avg']  # returns the average rati
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def top_n_rated_items(n, start_date, end_date):
     top_items = (
         Review.objects
@@ -43,6 +53,7 @@ def top_n_rated_items(n, start_date, end_date):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def aggregate_order_stats(request, timeframe):
     start_date, end_date = get_date_range(timeframe)
     total_orders = Order.objects.filter(created_at__range=(start_date, end_date)).count()
@@ -58,6 +69,7 @@ def aggregate_order_stats(request, timeframe):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def custom_aggregate_order_stats(request):
     start_date = request.query_params.get('start_date')
     end_date = request.query_params.get('end_date', start_date)
@@ -77,6 +89,7 @@ def custom_aggregate_order_stats(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff])
 def custom_order_graph_data(request):
     start_date = request.query_params.get('start_date')
     end_date = request.query_params.get('end_date', start_date)
@@ -105,6 +118,7 @@ def custom_order_graph_data(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def custom_aggregate_order_by_menu_item(request):
     start_date = request.query_params.get('start_date')
     end_date = request.query_params.get('end_date', start_date)
@@ -133,6 +147,7 @@ def custom_aggregate_order_by_menu_item(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def custom_order_graph_by_menu_item(request):
     start_date = request.query_params.get('start_date')
     end_date = request.query_params.get('end_date', start_date)
@@ -169,6 +184,7 @@ def custom_order_graph_by_menu_item(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def custom_aggregate_order_by_time_of_day(request):
     start_date = request.query_params.get('start_date')
     end_date = request.query_params.get('end_date', start_date)
@@ -193,6 +209,7 @@ def custom_aggregate_order_by_time_of_day(request):
     return Response(list(time_based_data))
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def custom_graph_order_by_time_of_day(request):
     """
     Custom API view to return aggregated order statistics based on the time of day.
@@ -229,6 +246,7 @@ def custom_graph_order_by_time_of_day(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def average_rating_view(request, menu_item_id):
     start_date = request.query_params.get('start_date')
     end_date = request.query_params.get('end_date')
@@ -240,6 +258,7 @@ def average_rating_view(request, menu_item_id):
     return Response({'average_rating': avg_rating})
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,IsMessStaff ])
 def top_n_rated_items_view(request):
     n = int(request.query_params.get('n', 5))  # Default to top 5 if not specified
     start_date = request.query_params.get('start_date')
