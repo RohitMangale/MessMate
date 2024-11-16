@@ -1,12 +1,11 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [user, setUser] = useState(true);
+  const user = true;
   return (
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f5f0f0] px-10 py-3">
+    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-background px-10 py-3">
       <div className="flex items-center gap-8">
-        <Link to="/" className="flex items-center gap-4 text-[#181111]">
+        <Link to="/" className="flex items-center gap-4 text-blackText">
           <div className="size-4">
             <svg
               viewBox="0 0 48 48"
@@ -21,14 +20,14 @@ const Navbar = () => {
               ></path>
             </svg>
           </div>
-          <h2 className="text-[#181111] text-lg font-bold leading-tight tracking-[-0.015em]">
+          <h2 className="text-blackText text-lg font-bold leading-tight tracking-[-0.015em]">
             MessMate
           </h2>
         </Link>
         {/* <label className="flex flex-col min-w-40 !h-10 max-w-64">
               <div className="flex w-full flex-1 items-stretch rounded-xl h-full">
                 <div
-                  className="text-[#8a6260] flex border-none bg-[#f5f0f0] items-center justify-center pl-4 rounded-l-xl border-r-0"
+                  className="text-colorText flex border-none bg-[#f5f0f0] items-center justify-center pl-4 rounded-l-xl border-r-0"
                   data-icon="MagnifyingGlass"
                   data-size="24px"
                   data-weight="regular"
@@ -41,7 +40,7 @@ const Navbar = () => {
                 </div>
                 <input
                   placeholder="Search"
-                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#181111] focus:outline-0 focus:ring-0 border-none bg-[#f5f0f0] focus:border-none h-full placeholder:text-[#8a6260] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-blackText focus:outline-0 focus:ring-0 border-none bg-[#f5f0f0] focus:border-none h-full placeholder:text-colorText px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
                   value=""
                 />
               </div>
@@ -50,25 +49,25 @@ const Navbar = () => {
       <div className="flex flex-1 justify-end gap-8">
         {/* <div className="flex items-center gap-9">
           <a
-            className="text-[#181111] text-sm font-medium leading-normal"
+            className="text-blackText text-sm font-medium leading-normal"
             href="#"
           >
             Home
           </a>
           <a
-            className="text-[#181111] text-sm font-medium leading-normal"
+            className="text-blackText text-sm font-medium leading-normal"
             href="#"
           >
             Search
           </a>
           <a
-            className="text-[#181111] text-sm font-medium leading-normal"
+            className="text-blackText text-sm font-medium leading-normal"
             href="#"
           >
             Grocery
           </a>
           <a
-            className="text-[#181111] text-sm font-medium leading-normal"
+            className="text-blackText text-sm font-medium leading-normal"
             href="#"
           >
             Deals
@@ -78,7 +77,7 @@ const Navbar = () => {
           <div className="flex gap-2">
             <Link to='/checkout' className="iconSoft">
               <div
-                className="text-[#181111]"
+                className="text-blackText"
                 data-icon="ShoppingCartSimple"
                 data-size="20px"
                 data-weight="regular"
@@ -95,9 +94,9 @@ const Navbar = () => {
               </div>
             </Link>
 
-            <Link to='/orders' className="iconSoft">
+            <Link to='/messdashboard' className="iconSoft">
               <div
-                className="text-[#181111]"
+                className="text-blackText"
                 data-icon="User"
                 data-size="20px"
                 data-weight="regular"
@@ -117,7 +116,7 @@ const Navbar = () => {
         ) : (
           <Link
             to="/login"
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f2231c] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+            className="btnColored"
           >
             <span className="truncate">Login</span>
           </Link>

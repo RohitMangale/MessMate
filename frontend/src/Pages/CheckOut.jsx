@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import starIcon from "../assets/Star.png";
 
 const itemlist = [
   {
@@ -8,6 +9,7 @@ const itemlist = [
     name: "White Cheddar Mac & Cheese",
     img: "https://cdn.usegalileo.ai/stability/b5ff7d3a-b8a5-4dd3-9809-85efaac70cdd.png",
     tags: "Lunch, Dinner",
+    rating: 4.5,
     ingredients: ["Lettuce", "Tomatoes", "Cucumbers", "Feta Cheese", "Olives"],
   },
   {
@@ -17,6 +19,7 @@ const itemlist = [
     name: "Lemon Garlic Broccoli",
     img: "https://cdn.usegalileo.ai/stability/934464b5-541f-4462-a71f-16d31f5ed574.png",
     tags: "Drink",
+    rating: 4.0,
     ingredients: ["Coffee Beans", "Water"],
   },
 ];
@@ -32,7 +35,7 @@ const CheckOut = () => {
           <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
             <div className="flex flex-wrap justify-between gap-3 p-4">
               <div className="flex min-w-72 flex-col gap-3">
-                <p className="text-[#181111] tracking-light text-[32px] font-bold leading-tight">
+                <p className="text-blackText tracking-light text-[32px] font-bold leading-tight">
                   Order Summary
                 </p>
               </div>
@@ -43,17 +46,17 @@ const CheckOut = () => {
                 <div key={item.id} className="p-4">
                   <div className="flex items-stretch justify-between gap-4 rounded-xl">
                     <div className="flex flex-col gap-1 flex-[2_2_0px]">
-                      <p className="text-[#181111] text-base font-bold leading-tight">
+                      <p className="text-blackText text-base font-bold leading-tight">
                         {item.name}
                       </p>
 
                       <p className="text-reddish text-sm font-bold leading-normal">
                         {item.quantity} * {item.price}
                       </p>
-                      <p className="text-[#8a6260] text-sm font-normal leading-normal">
+                      <p className="text-colorText text-sm font-normal leading-normal">
                         Ingredients: {item.ingredients.join(", ")}
                       </p>
-                      <p className="text-[#181111] text-sm font-normal leading-normal">
+                      <p className="text-blackText text-sm font-normal leading-normal">
                         {item.tags}
                       </p>
 
@@ -91,7 +94,7 @@ const CheckOut = () => {
                           </svg>
                         </div>
 
-                        <p className="text-[#181111] text-lg font-bold leading-normal">
+                        <p className="text-blackText text-lg font-bold leading-normal">
                           {item.quantity}
                         </p>
 
@@ -120,18 +123,27 @@ const CheckOut = () => {
                       </div>
                     </div>
                     <div
-                      className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
+                      className="w-full flex items-end justify-end bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
                       style={{
                         backgroundImage: `url(${item.img})`,
                       }}
-                    ></div>
+                    >
+                      <div className="flex items-center gap-[6px] rating  text-center text-colorText font-bold border-background border-2  bg-background rounded-md p-2 m-[10px] w-max ">
+                  <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
+                    <img src={starIcon} alt="" /> {item.rating}
+                  </span>
+                  <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
+                    (272)
+                  </span>
+              </div>
+                    </div>
                   </div>
                 </div>
               );
             })}
             {/* <div className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2">
               <div
-                className="text-[#181111] flex items-center justify-center rounded-lg bg-[#f5f0f0] shrink-0 size-12"
+                className="text-blackText flex items-center justify-center rounded-lg bg-[#f5f0f0] shrink-0 size-12"
                 data-icon="Clock"
                 data-size="24px"
                 data-weight="regular"
@@ -147,30 +159,30 @@ const CheckOut = () => {
                 </svg>
               </div>
               <div className="flex flex-col justify-center">
-                <p className="text-[#181111] text-base font-medium leading-normal line-clamp-1">
+                <p className="text-blackText text-base font-medium leading-normal line-clamp-1">
                   Estimated pickup time
                 </p>
-                <p className="text-[#8a6260] text-sm font-normal leading-normal line-clamp-2">
+                <p className="text-colorText text-sm font-normal leading-normal line-clamp-2">
                   Pickup at 5:30 PM
                 </p>
               </div>
             </div> */}
             {/* <div className="flex flex-col gap-3 p-4">
               <div className="flex gap-6 justify-between">
-                <p className="text-[#181111] text-base font-medium leading-normal">
+                <p className="text-blackText text-base font-medium leading-normal">
                   Order in progress
                 </p>
-                <p className="text-[#181111] text-sm font-normal leading-normal">
+                <p className="text-blackText text-sm font-normal leading-normal">
                   50%
                 </p>
               </div>
               <div className="rounded bg-[#e6dbdb]">
                 <div
-                  className="h-2 rounded bg-[#181111]"
+                  className="h-2 rounded bg-blackText"
                   style={{ width: "50%" }}
                 ></div>
               </div>
-              <p className="text-[#8a6260] text-sm font-normal leading-normal">
+              <p className="text-colorText text-sm font-normal leading-normal">
                 Your order is being prepared
               </p>
             </div> */}
@@ -181,7 +193,7 @@ const CheckOut = () => {
 
             {/* btns of cancel and checkout */}
             <div className="flex gap-4 flex-wrap px-4 py-3 justify-between items-center">
-            <p className="text-[#181111] text-base font-bold leading-tight">
+            <p className="text-blackText text-base font-bold leading-tight">
               Total: $71.94
             </p>
             <div className="flex w-max flex-row  gap-6" >

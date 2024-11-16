@@ -16,13 +16,13 @@
     }
   
     .btnLight {
-      @apply flex w-max cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#f5f0f0] text-[#181111] text-sm font-bold leading-normal tracking-[0.015em];
+      @apply flex w-max cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-background text-blackText text-sm font-bold leading-normal tracking-[0.015em];
     }
     .btnColored {
       @apply flex w-max cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-reddish text-white text-sm font-bold leading-normal tracking-[0.015em];
     }
     .iconSoft {
-      @apply flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f5f0f0] text-[#181111] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5;
+      @apply flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-background text-blackText gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5;
     }
     .iconSharp {
       @apply bg-[url('./assets/images/mask.png')] bg-no-repeat bg-center bg-cover w-full h-[100px] leading-[100px];

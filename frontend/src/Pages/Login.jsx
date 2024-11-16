@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 const Login = () => {
   return (
       <div className=" bg-white flex flex-col items-center justify-start p-6 mx-auto md:h-screen lg:py-0">
-      <div className="flex items-center gap-4 text-[#181111] m-6">
+      <div className="flex items-center gap-4 text-blackText m-6">
               <div className="size-8">
                 <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" clipRule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor"></path>
                 </svg>
               </div>
-              <h2 className="text-[#181111] text-[32px] font-bold leading-tight tracking-[-0.015em]">MessMate</h2>
+              <h2 className="text-blackText text-[32px] font-bold leading-tight tracking-[-0.015em]">MessMate</h2>
             </div>
 
 
@@ -56,9 +56,9 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-colorText focus:border-colorText font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+                className="btnColored w-full "
               >
-                Create an account
+                Login
               </button>
               <p className="flex flex-row justify-center items-center gap-1 text-sm font-light text-gray-500 ">
                 Don&apos;t have an account?{" "}

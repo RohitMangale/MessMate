@@ -1,37 +1,37 @@
 const Footer = () => {
   return (
-    <footer className="flex justify-center border-t border-solid border-t-[#f5f0f0] mt-5">
+    <footer className="flex justify-center border-t border-solid border-t-background mt-5">
       <div className="flex max-w-[960px] flex-1 flex-col gap-6 py-10">
         <div className="flex flex-col gap-6 px-5  text-center container">
           <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-row sm:justify-center">
-            <a className="text-[#8a6260] text-base font-normal leading-normal min-w-[10rem]" href="#">
+            <a className="text-colorText text-base font-normal leading-normal min-w-[10rem]" href="#">
               Become a Dasher
             </a>
-            <a className="text-[#8a6260] text-base font-normal leading-normal min-w-[10rem]" href="#">
+            <a className="text-colorText text-base font-normal leading-normal min-w-[10rem]" href="#">
               Be a partner restaurant
             </a>
-            <a className="text-[#8a6260] text-base font-normal leading-normal min-w-[10rem]" href="#">
+            <a className="text-colorText text-base font-normal leading-normal min-w-[10rem]" href="#">
               Get the MessMate app
             </a>
-            <a className="text-[#8a6260] text-base font-normal leading-normal min-w-[10rem]" href="#">
+            <a className="text-colorText text-base font-normal leading-normal min-w-[10rem]" href="#">
               Help
             </a>
-            <a className="text-[#8a6260] text-base font-normal leading-normal min-w-[10rem]" href="#">
+            <a className="text-colorText text-base font-normal leading-normal min-w-[10rem]" href="#">
               Read our blog
             </a>
           </div>
         </div>
-        <div className="flex flex-col gap-6 px-5 text-center container">
-          <div className="flex flex-wrap items-center justify-between gap-6 sm:flex-row sm:justify-center">
-            <a className="text-[#8a6260] text-base font-normal leading-normal min-w-fit" href="#">
+        <div className="flex flex-col  gap-6 px-5 text-center container">
+          <div className="flex flex-wrap items-center lg:justify-between gap-6 sm:flex-row sm:items-center justify-center">
+            <a className="text-colorText text-base font-normal leading-normal min-w-fit" href="#">
               India
             </a>
-            <a className="text-[#8a6260] text-base font-normal leading-normal min-w-[10rem]" href="#">
+            <a className="text-colorText text-base font-normal leading-normal min-w-[10rem]" href="#">
               © 2022 MessMate • Privacy Policy • Terms of Service 
             </a>
             <div className="flex flex-wrap justify-center gap-4">
               <a href="#">
-                <div className="text-[#8a6260]">
+                <div className="text-colorText">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24px"
@@ -44,7 +44,7 @@ const Footer = () => {
                 </div>
               </a>
               <a href="#">
-                <div className="text-[#8a6260]">
+                <div className="text-colorText">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24px"
@@ -57,7 +57,7 @@ const Footer = () => {
                 </div>
               </a>
               <a href="#">
-                <div className="text-[#8a6260]">
+                <div className="text-colorText">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24px"

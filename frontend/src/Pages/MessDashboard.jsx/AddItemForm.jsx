@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
-const Register = () => {
+const AddItemForm = () => {
   return (
-    <div className="bg-white">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <div className="bg-white ">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
         <div className="flex items-center gap-4 text-blackText mb-6">
           <div className="size-8">
             <svg
@@ -27,119 +27,125 @@ const Register = () => {
         <div className="w-full bg-background rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-              Create an account
+              Add Food Item
             </h1>
             <form className="space-y-4  md:space-y-6" action="#">
 
             <div>
                 <label
-                  htmlFor="username"
+                  htmlFor="item_name"
                   className="block mb-2 text-sm font-medium text-gray-900 "
                 >
-                  Full Name
+                  Item Name
                 </label>
                 <input
                   type="text"
-                  name="username"
-                  id="username"
+                  name="item_name"
+                  id="item_name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-colorText focus:border-colorText block w-full p-2.5 "
-                  placeholder="Full Name"
+                  placeholder="e.g. Chicken Biryani"
                   required
                 />
               </div>
 
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="item_name"
                   className="block mb-2 text-sm font-medium text-gray-900 "
                 >
-                  Your email
+                  Item Price
                 </label>
                 <input
-                  type="email"
-                  name="email"
-                  id="email"
+                  type="number"
+                  name="item_name"
+                  id="item_name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-colorText focus:border-colorText block w-full p-2.5 "
-                  placeholder="name@company.com"
+                  placeholder="e.g. 100"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="item_tag"
+                  className="block mb-2 text-sm font-medium text-gray-900 "
+                >
+                  Tags
+                </label>
+                <input
+                  type="text"
+                  name="item_tag"
+                  id="item_tag"
+                  placeholder="e.g. Spicy, Veg, Non-Veg"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-colorText focus:border-colorText block w-full p-2.5 "
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="ingredients"
+                  className="block mb-2 text-sm font-medium text-gray-900 "
+                >
+                  Ingredients
+                </label>
+                <input
+                  type="text"
+                  name="ingredients"
+                  id="ingredients"
+                  placeholder="e.g. Chicken, Rice, Spices"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-colorText focus:border-colorText block w-full p-2.5 "
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="available"
+                  className="block mb-2 text-sm font-medium text-gray-900 "
+                >
+                  Availablity
+                </label>
+                <input
+                  type="text"
+                  name="available"
+                  id="available"
+                  placeholder="e.g. True/False"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-colorText focus:border-colorText block w-full p-2.5 "
                   required
                 />
               </div>
               <div>
                 <label
-                  htmlFor="password"
+                  htmlFor="serving_time"
                   className="block mb-2 text-sm font-medium text-gray-900 "
                 >
-                  Password
+                  Serving Time
                 </label>
                 <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
+                  type="text"
+                  name="serving_time"
+                  id="serving_time"
+                  placeholder="e.g. Breakfast/Lunch/Dinner"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-colorText focus:border-colorText block w-full p-2.5 "
                   required
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="confirm-password"
-                  className="block mb-2 text-sm font-medium text-gray-900 "
-                >
-                  Confirm password
-                </label>
-                <input
-                  type="password"
-                  name="confirm-password"
-                  id="confirm-password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-colorText focus:border-colorText block w-full p-2.5 "
-                  required
-                />
-              </div>
-              <div className="flex items-start">
-                <div className="flex items-center h-5">
-                  <input
-                    id="terms"
-                    aria-describedby="terms"
-                    type="checkbox"
-                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 checked:bg-red-500 checked:border-reddish focus:ring-red-400 focus:border-red-500"
-                    required
-                  />
-                </div>
-                <div className="ml-3 text-sm">
-                  <label htmlFor="terms" className="font-light text-gray-500 ">
-                    I accept the{" "}
-                    <a
-                      className="font-medium text-primary-600 hover:underline "
-                      href="#"
-                    >
-                      Terms and Conditions
-                    </a>
-                  </label>
-                </div>
-              </div>
-              <button
+
+              <Link
+              to="/dashboard"
                 type="submit"
                 className="btnColored w-full "
               >
-                Create an account
-              </button>
-              <p className="flex flex-row justify-center items-center gap-1 text-sm font-light text-gray-500 ">
-                Already have an account?{" "}
-                <Link
-                  to="/login"
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline "
-                >
-                  Login
-                </Link>
-              </p>
+                Add Item
+              </Link>
+
             </form>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default AddItemForm

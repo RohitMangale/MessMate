@@ -21,13 +21,13 @@ const HomePageSections = () => {
         </div>
       </div>
 
-      <h2 className="text-[#181111] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 mt-10 ">
+      <h2 className="text-blackText text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 mt-10 ">
         How It Works
       </h2>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
         <div className="flex flex-1 gap-3 rounded-lg border border-[#e6dbdb] bg-white p-4 flex-col">
           <div
-            className="text-[#181111]"
+            className="text-blackText"
             data-icon="Truck"
             data-size="24px"
             data-weight="regular"
@@ -43,17 +43,17 @@ const HomePageSections = () => {
             </svg>
           </div>
           <div className="flex flex-col gap-1">
-            <h2 className="text-[#181111] text-base font-bold leading-tight">
+            <h2 className="text-blackText text-base font-bold leading-tight">
               Fresh, pre-portioned ingredients
             </h2>
-            <p className="text-[#8a6260] text-sm font-normal leading-normal">
+            <p className="text-colorText text-sm font-normal leading-normal">
               Sourced from trusted partners. Delivered to your door.
             </p>
           </div>
         </div>
         <div className="flex flex-1 gap-3 rounded-lg border border-[#e6dbdb] bg-white p-4 flex-col">
           <div
-            className="text-[#181111]"
+            className="text-blackText"
             data-icon="HandHeart"
             data-size="24px"
             data-weight="regular"
@@ -69,17 +69,17 @@ const HomePageSections = () => {
             </svg>
           </div>
           <div className="flex flex-col gap-1">
-            <h2 className="text-[#181111] text-base font-bold leading-tight">
+            <h2 className="text-blackText text-base font-bold leading-tight">
               Chef-crafted recipes
             </h2>
-            <p className="text-[#8a6260] text-sm font-normal leading-normal">
+            <p className="text-colorText text-sm font-normal leading-normal">
               Step-by-step instructions for all skill levels.
             </p>
           </div>
         </div>
         <div className="flex flex-1 gap-3 rounded-lg border border-[#e6dbdb] bg-white p-4 flex-col">
           <div
-            className="text-[#181111]"
+            className="text-blackText"
             data-icon="Coffee"
             data-size="24px"
             data-weight="regular"
@@ -95,17 +95,17 @@ const HomePageSections = () => {
             </svg>
           </div>
           <div className="flex flex-col gap-1">
-            <h2 className="text-[#181111] text-base font-bold leading-tight">
+            <h2 className="text-blackText text-base font-bold leading-tight">
               Eco-friendly packaging
             </h2>
-            <p className="text-[#8a6260] text-sm font-normal leading-normal">
+            <p className="text-colorText text-sm font-normal leading-normal">
               Insulated and recyclable. Skip the grocery store.
             </p>
           </div>
         </div>
         <div className="flex flex-1 gap-3 rounded-lg border border-[#e6dbdb] bg-white p-4 flex-col">
           <div
-            className="text-[#181111]"
+            className="text-blackText"
             data-icon="ShoppingCart"
             data-size="24px"
             data-weight="regular"
@@ -121,17 +121,17 @@ const HomePageSections = () => {
             </svg>
           </div>
           <div className="flex flex-col gap-1">
-            <h2 className="text-[#181111] text-base font-bold leading-tight">
+            <h2 className="text-blackText text-base font-bold leading-tight">
               Flexible delivery options
             </h2>
-            <p className="text-[#8a6260] text-sm font-normal leading-normal">
+            <p className="text-colorText text-sm font-normal leading-normal">
               Weekly or bi-weekly subscriptions. Pause or cancel anytime.
             </p>
           </div>
         </div>
       </div>
 
-      <h2 className="text-[#181111] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
+      <h2 className="text-blackText text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
         Why MessMate?
       </h2>
 
@@ -144,10 +144,10 @@ const HomePageSections = () => {
             }}
           ></div>
           <div>
-            <p className="text-[#181111] text-base font-medium leading-normal">
+            <p className="text-blackText text-base font-medium leading-normal">
               No delivery fees
             </p>
-            <p className="text-[#8a6260] text-sm font-normal leading-normal">
+            <p className="text-colorText text-sm font-normal leading-normal">
               On orders over $12
             </p>
           </div>
@@ -160,10 +160,10 @@ const HomePageSections = () => {
             }}
           ></div>
           <div>
-            <p className="text-[#181111] text-base font-medium leading-normal">
+            <p className="text-blackText text-base font-medium leading-normal">
               No delivery fees
             </p>
-            <p className="text-[#8a6260] text-sm font-normal leading-normal">
+            <p className="text-colorText text-sm font-normal leading-normal">
               On orders over $12
             </p>
           </div>
@@ -176,10 +176,10 @@ const HomePageSections = () => {
             }}
           ></div>
           <div>
-            <p className="text-[#181111] text-base font-medium leading-normal">
+            <p className="text-blackText text-base font-medium leading-normal">
               No delivery fees
             </p>
-            <p className="text-[#8a6260] text-sm font-normal leading-normal">
+            <p className="text-colorText text-sm font-normal leading-normal">
               On orders over $12
             </p>
           </div>
