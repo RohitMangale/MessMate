@@ -8,16 +8,16 @@ from django.contrib.auth.models import User,Group
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     # Role is now linked to UserProfile
-    role = serializers.ChoiceField(choices=UserProfile.USER_ROLE_CHOICES)
-
+    role = serializers.CharField(source='userprofile.role', read_only=True)
+    role_input = serializers.ChoiceField(choices=UserProfile.USER_ROLE_CHOICES, write_only=True)
     class Meta:
         model = User
-        fields = ['username', 'password', 'email', 'role']
+        fields = ['username', 'password', 'email','role','role_input']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         # Extract role from validated data
-        role = validated_data.pop('role')  # Pop role for UserProfile
+        role = validated_data.pop('role_input')  # Pop role for UserProfile
         password = validated_data.pop('password')
 
         # Create the user and set the password

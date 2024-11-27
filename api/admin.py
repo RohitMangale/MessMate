@@ -34,9 +34,9 @@ class IngredientAdmin(admin.ModelAdmin):
 # Menu Admin
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ('item_name', 'item_price', 'item_tag', 'available', 'serving_time')
+    list_display = ('item_name', 'item_price', 'item_tag', 'serving_time','ingredient_list')
     search_fields = ('item_name', 'item_tag')
-    list_filter = ('available',)
+    list_filter = ()
 
 # MenuIngredient Admin
 @admin.register(MenuIngredient)
