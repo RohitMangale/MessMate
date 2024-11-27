@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models import Sum
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 
@@ -45,8 +45,10 @@ class Menu(models.Model):
     item_name = models.CharField(max_length=255)
     item_price = models.DecimalField(max_digits=10, decimal_places=2)
     item_tag = models.CharField(max_length=100)
-    ingredients = models.ManyToManyField(Ingredient, through='MenuIngredient', related_name="menus")
-    available = models.BooleanField(default=True)
+    ingredient_list = models.CharField(max_length=1000, null=True, blank=True)
+    rating = models.FloatField( validators=[MinValueValidator(1.0), MaxValueValidator(5.0)], null=True, blank=True)
+    ingredients = models.ManyToManyField(Ingredient, through='MenuIngredient', related_name="menus", null=True, blank=True)
+    # available = models.BooleanField(default=True)
     serving_time = models.CharField(max_length=100)
     image = models.ImageField(upload_to='menu_images/', blank=True, null=True)  # Path to image file
     # price = models.FloatField(max_digits=10, decimal_places=True)

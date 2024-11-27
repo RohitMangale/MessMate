@@ -25,7 +25,7 @@ from api.permissions import IsMessStaff, IsOwnerOrReadOnly
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models import Sum
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
 
 
@@ -116,12 +116,12 @@ class MenuViewSet(viewsets.ModelViewSet):
             permission_classes = [AllowAny]
         # Only authenticated users can create
         elif self.action == 'create':
-            permission_classes = [IsAuthenticated, IsMessStaff]
+            permission_classes = [IsAuthenticated, IsMessStaff, IsAdminUser]
         # Only mess staff can perform certain actions
         elif self.action in ['update', 'partial_update', 'destroy']:
-            permission_classes = [IsAuthenticated, IsMessStaff]
+            permission_classes = [IsAuthenticated, IsMessStaff, IsAdminUser]
         else:
-            permission_classes = [IsAuthenticated]  # General fallback
+            permission_classes = [IsAuthenticated, IsAdminUser]  # General fallback
 
         return [permission() for permission in permission_classes]
 
