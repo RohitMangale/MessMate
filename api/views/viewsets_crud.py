@@ -115,7 +115,7 @@ class MenuViewSet(viewsets.ModelViewSet):
         if self.action == 'retrieve' or self.action == 'list':
             permission_classes = [AllowAny]
         # Only authenticated users can create
-        elif self.action == 'create':
+        elif self.action == 'create': 
             permission_classes = [IsAuthenticated, IsMessStaff, IsAdminUser]
         # Only mess staff can perform certain actions
         elif self.action in ['update', 'partial_update', 'destroy']:

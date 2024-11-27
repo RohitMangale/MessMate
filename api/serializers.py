@@ -61,7 +61,7 @@ class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = '__all__'
-        read_only_fields = ['item_price']  # Price might be calculated elsewhere
+        # read_only_fields = ['item_price']  # Price might be calculated elsewhere
 
 # MenuIngredient Serializer
 class MenuIngredientSerializer(serializers.ModelSerializer):
