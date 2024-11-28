@@ -22,11 +22,12 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import action
 from rest_framework import status
 from api.permissions import IsMessStaff, IsOwnerOrReadOnly
-from django.db.models.signals import post_save
+# from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models import Sum
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class UserRegistrationViewSet(viewsets.ModelViewSet):
@@ -352,3 +353,8 @@ class BillViewSet(viewsets.ModelViewSet):
     queryset = Bill.objects.all()
     serializer_class = BillSerializer
     
+class UserIDView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensure only logged-in users access this
+
+    def get(self, request):
+        return Response({'id': request.user.id})
