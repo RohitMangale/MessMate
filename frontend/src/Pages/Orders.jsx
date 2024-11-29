@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OrderDetails from "../componenets/OrderDetails";
+import OrderDetails from "../components/OrderDetails";
 import { Link } from "react-router-dom";
 
 const orderlist = [
@@ -37,7 +37,7 @@ const orderlist = [
 ];
 
 const Orders = () => {
-  let currentOrder = false;
+  let currentOrder = true;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {

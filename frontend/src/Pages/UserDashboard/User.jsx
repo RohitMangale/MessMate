@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import Orders from "../Orders";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../../config";
 
 const foodItems = [
   {
@@ -50,6 +53,27 @@ const foodItems = [
 ];
 
 const User = () => {
+  const [user, setUser] = useState([]);
+
+  const userid = localStorage.getItem("userId");
+      
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response  = await axios.get(`${BASE_URL}/userregistration/${userid}/`, {
+          
+        });
+        // if (!response.ok) throw new Error("Failed to fetch user");
+        const data = await response.data;
+        setUser(data);
+        // console.log(user) // Update state with fetched menu items
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+
+    fetchUser();
+  }, [userid]);
   return (
 <div className="relative flex size-full min-h-screen flex-col bg-white overflow-x-hidden">
   <div className="layout-container flex h-full grow flex-col">
@@ -58,7 +82,7 @@ const User = () => {
         <div className="flex flex-wrap justify-between gap-3 p-4">
           <div className="flex min-w-72 flex-col gap-3">
             <p className="text-blackText tracking-light text-[32px] font-bold leading-tight">
-              Hi, Kate
+              Hi, {user.username}
             </p>
             <p className="text-[#897361] text-sm font-normal leading-normal">
               Here&apos;s what&apos;s happening with your orders
