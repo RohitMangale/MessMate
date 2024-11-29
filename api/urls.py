@@ -46,7 +46,7 @@ router.register(r'userregistration', UserRegistrationViewSet)
 # Include router.urls in the main URL configuration
 urlpatterns = [
     path('', include(router.urls)),
-    path('userid/', UserIDView),
+    path('userid/', UserIDView.as_view()),
     path('reviews/average-rating/<int:menu_item_id>/', average_rating_view, name='average_rating'),
     path('reviews/top-rated/', top_n_rated_items_view, name='top_rated_items'),
     path('orders/stats/<str:timeframe>/', aggregate_order_stats, name='aggregate_order_stats'),

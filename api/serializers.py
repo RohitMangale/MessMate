@@ -71,12 +71,12 @@ class MenuIngredientSerializer(serializers.ModelSerializer):
 
 # Order Serializer
 class OrderSerializer(serializers.ModelSerializer):
-    total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
+    # total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
 
     class Meta:
         model = Order
         fields = '__all__'
-        read_only_fields = ['created_at', 'updated_at', 'total_price']
+        read_only_fields = ['created_at', 'updated_at']
 
 class BillSerializer(serializers.ModelSerializer):
     #total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
@@ -84,7 +84,7 @@ class BillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bill
         fields = '__all__'
-        read_only_fields = ['created_at', 'updated_at', 'total_price']
+        read_only_fields = ['created_at', 'updated_at']
 
 # OrderItem Serializer
 class OrderItemSerializer(serializers.ModelSerializer):
