@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
+import { toast } from "react-toastify";
 
 // Initial state of the cart
 const initialState = {
@@ -64,7 +65,8 @@ export const OrderProvider = ({ children }) => {
   const [state, dispatch] = useReducer(orderReducer, initialState);
 
   const addToCart = (item) => {
-    dispatch({ type: "ADD_TO_CART", payload: item }); // Pass full item object
+    dispatch({ type: "ADD_TO_CART", payload: item });
+    toast.success("Added to cart") // Pass full item object
   };
 
   const removeFromCart = (id) => {

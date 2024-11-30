@@ -5,7 +5,7 @@ const foodItems = [
     price: "$12.99",
     tags: "Breakfast, Vegan",
     rating: 3.9,
-    quantity: 5,
+    quantity: 2,
     ingredients: ["Avocado", "Bread", "Olive Oil", "Salt"],
   },
   {
@@ -14,7 +14,7 @@ const foodItems = [
     price: "$9.99",
     tags: "Breakfast",
     rating: 4.5,
-    quantity: 9,
+    quantity: 1,
     ingredients: ["Acai", "Banana", "Granola", "Honey"],
   },
   {
@@ -26,31 +26,31 @@ const foodItems = [
     quantity: 1,
     ingredients: ["Egg", "Cheese", "Biscuit", "Butter"],
   },
-  {
-    img: "https://cdn.usegalileo.ai/sdxl10/0ab7814c-86c4-4d9e-a6f3-1ab672998a06.png",
-    name: "Green Smoothie",
-    price: "$5.99",
-    tags: "Drink",
-    rating: 4.9,
-    quantity: 3,
-    ingredients: ["Spinach", "Banana", "Almond Milk", "Chia Seeds"],
-  },
-  {
-    img: "https://cdn.usegalileo.ai/stability/b5ff7d3a-b8a5-4dd3-9809-85efaac70cdd.png",
-    name: "Avocado Toast",
-    price: "$12.99",
-    tags: "Breakfast, Vegan",
-    quantity: 4,
-    rating: 3.9,
-    ingredients: ["Avocado", "Bread", "Olive Oil", "Salt"],
-  },
+  // {
+  //   img: "https://cdn.usegalileo.ai/sdxl10/0ab7814c-86c4-4d9e-a6f3-1ab672998a06.png",
+  //   name: "Green Smoothie",
+  //   price: "$5.99",
+  //   tags: "Drink",
+  //   rating: 4.9,
+  //   quantity: 3,
+  //   ingredients: ["Spinach", "Banana", "Almond Milk", "Chia Seeds"],
+  // },
+  // {
+  //   img: "https://cdn.usegalileo.ai/stability/b5ff7d3a-b8a5-4dd3-9809-85efaac70cdd.png",
+  //   name: "Avocado Toast",
+  //   price: "$12.99",
+  //   tags: "Breakfast, Vegan",
+  //   quantity: 4,
+  //   rating: 3.9,
+  //   ingredients: ["Avocado", "Bread", "Olive Oil", "Salt"],
+  // },
 ];
 // eslint-disable-next-line react/prop-types
 const OrderCard = () => {
   return (
     <div className="flex flex-col gap-3 mt-5 max-w-80 ">
         <h3 className="text-reddish text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4 ">
-          Order #1234
+          Order #32
         </h3>
 
 

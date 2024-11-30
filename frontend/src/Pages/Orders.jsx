@@ -1,12 +1,16 @@
-import { useState } from "react";
-import OrderDetails from "../components/OrderDetails";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useOrder } from "../contexts/OrderContext"; // Importing the custom hook
+import OrderDetails from "../components/OrderDetails";
+import starIcon from "../assets/Star.png";
+import axios from "axios";
+import { BASE_URL } from "../config";
+import { toast } from "react-toastify";
 
 const orderlist = [
   {
     id: "123456",
     items: 6,
-    // pickupTime: "12:45 PM",
     status: "Completed",
     img: "https://cdn.usegalileo.ai/stability/b5ff7d3a-b8a5-4dd3-9809-85efaac70cdd.png",
   },
@@ -37,7 +41,7 @@ const orderlist = [
 ];
 
 const Orders = () => {
-  let currentOrder = true;
+  const { cart, clearCart } = useOrder(); // Access the cart from context
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -47,13 +51,72 @@ const Orders = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const currentOrderExists = cart.length > 0;
+  const currentOrderID = localStorage.getItem("currentOrderID");
+
+  // const orderItems = localStorage.getItem("order");
+  // console.log(orderItems);
+  const pollingRef = useRef(null); // To persist interval ID
+  const isPollingActive = useRef(true); // To track polling status
+
+  useEffect(() => {
+    const fetchCurrentOrderState = async () => {
+      if (!isPollingActive.current) return; // Break if polling is inactive
+
+      try {
+        const response = await axios.get(`${BASE_URL}/orders/${currentOrderID}/`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
+
+        console.log("Order Status:", response.data.status);
+
+        // If the order is completed, stop polling
+        if (response.data.status === "completed") {
+          console.log("Polling completed. Stopping polling...");
+          toast.success("Order completed successfully!");
+          localStorage.removeItem("order"); // Clear order from localStorage
+          clearCart(); // Clear the cart
+          clearInterval(pollingRef.current); // Stop polling
+          isPollingActive.current = false; // Mark polling as inactive
+        }
+      } catch (error) {
+        console.error("Error fetching the current order state:", error);
+      }
+    };
+
+    if (currentOrderID) {
+      // Start polling
+      fetchCurrentOrderState(); // Initial fetch
+      pollingRef.current = setInterval(fetchCurrentOrderState, 5000); // Poll every 5 seconds
+    }
+
+    // Cleanup on component unmount
+    return () => {
+      console.log("Cleaning up polling...");
+      if (pollingRef.current) {
+        clearInterval(pollingRef.current);
+      }
+    };
+  }, [currentOrderID, clearCart]); // Dependencies
+
+
+
+  
+  
+  
+
+    
+
   return (
     <div
       className="relative w-full flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
       style={{ fontFamily: 'Epilogue, "Noto Sans", sans-serif' }}
     >
       <div className="layout-container flex h-full grow flex-col">
-        <div className=" flex flex-1 justify-center py-5">
+        <div className="flex flex-1 justify-center py-5">
           <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
             <div className="flex flex-wrap justify-between gap-3 p-4">
               <div className="flex min-w-72 flex-col gap-3">
@@ -66,32 +129,50 @@ const Orders = () => {
               </div>
             </div>
 
-            {currentOrder == true ? (
+            {currentOrderExists ? (
               <div>
                 <h3 className="text-reddish text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
                   Current Orders
                 </h3>
-                <div className="p-4">
-                  <div className="flex items-stretch justify-between gap-4 rounded-xl">
-                    <div className="flex flex-col gap-1 flex-[2_2_0px]">
-                      <p className="text-colorText text-sm font-normal leading-normal">
-                        Order #123456789
-                      </p>
-                      <p className="text-blackText text-base font-bold leading-tight">
-                        Chicken Avocado Salad
-                      </p>
-                      <p className="text-colorText text-sm font-normal leading-normal">
-                        from Fresh Green
-                      </p>
-                    </div>
+                <div className="p-4 flex flex-col gap-4">
+                  {cart.map((item) => (
                     <div
-                      className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
-                      style={{
-                        backgroundImage:
-                          'url("https://cdn.usegalileo.ai/stability/411fe780-2b2d-4e8d-b2f7-302653e5436f.png")',
-                      }}
-                    ></div>
+                      key={item.id}
+                      className="flex items-stretch justify-between gap-4 rounded-xl"
+                    >
+                      <div className="flex flex-col gap-1 flex-[2_2_0px]">
+                        <p className="text-colorText text-sm font-normal leading-normal">
+                          Item #{item.id}
+                        </p>
+                        <p className="text-blackText text-base font-bold leading-tight">
+                          {item.item_name}
+                        </p>
+                        <p className="text-colorText text-sm font-normal leading-normal">
+                          Quantity: {item.quantity}
+                        </p>
+                        <p className="text-colorText text-sm font-normal leading-normal">
+                          Ingredients: {item.ingredient_list}
+                        </p>
+                        <p className="text-black text-sm font-normal leading-normal">
+                          {item.item_tag}
+                        </p>
+
+                      </div>
+                      <div
+                    className="w-full flex items-end justify-end bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
+                    style={{ backgroundImage: `url(${item.image})` }}
+                  >
+                    <div className="flex items-center gap-[6px] rating text-center text-colorText font-bold border-background border-2 bg-background rounded-md p-2 m-[10px] w-max">
+                      <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
+                        <img src={starIcon} alt="Star Icon" /> {item.rating}
+                      </span>
+                      <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
+                        (272)
+                      </span>
+                    </div>
                   </div>
+                    </div>
+                  ))}
                 </div>
                 <div className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2">
                   <div
@@ -176,7 +257,6 @@ const Orders = () => {
                       <p className="text-blackText text-base font-bold leading-tight">
                         Order #{order.id}
                       </p>
-
                       <p className="text-colorText text-sm font-normal leading-normal">
                         {order.items} - items {order.status}
                       </p>

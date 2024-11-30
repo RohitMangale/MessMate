@@ -3,11 +3,17 @@ import { useOrder } from "../contexts/OrderContext"; // Ensure this path is corr
 import starIcon from "../assets/Star.png";
 import axios from "axios"; // Import axios for API calls
 import { BASE_URL } from "../config";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 // import { useAuth } from "../contexts/AuthContext";
 
 const CheckOut = () => {
-  const { cart, removeFromCart, updateQuantity, calculateTotalPrice, clearCart } =
-    useOrder();
+  const {
+    cart,
+    removeFromCart,
+    updateQuantity,
+    calculateTotalPrice,
+    clearCart,
+  } = useOrder();
   const navigate = useNavigate(); // Hook for navigation
   const userid = localStorage.getItem("userId");
   const token = localStorage.getItem("accessToken");
@@ -30,34 +36,51 @@ const CheckOut = () => {
           headers: { Authorization: `Bearer ${token}` }, // Pass headers separately
         }
       );
+      console.log(orderResponse);
 
-      // const orderId = orderResponse.data.id; // Get the newly created order ID
+      const orderId = orderResponse.data.id; // Get the newly created order ID
 
-      // // Create order items
-      // const orderItems = cart.map((item) => ({
-      //   order: orderId,
-      //   menu: item.id,
-      //   quantity: item.quantity,
-      //   price: item.item_price,
-      // }));
+      // Create order items
+      const orderItems = cart.map((item) => ({
+        order: orderId,
+        menu: item.id,
+        quantity: item.quantity,
+        price: parseFloat(item.item_price).toFixed(2),
+      }));
+      localStorage.setItem("currentOrderID", orderId);
+      localStorage.setItem("order", JSON.stringify(orderItems));
+      console.log(orderItems);
 
-      // await Promise.all(
-      //   orderItems.map((orderItem) =>
-      //     axios.post("/orderitems/", {
-      //       orderItem,
-           
-      //     }),
-      //     {
-      //       headers: { Authorization: `Bearer ${authToken}`},
-      //     }
-      //   )
-      // );
+      try {
+        await Promise.all(
+          orderItems.map(({ order, menu, quantity, price }) => {
+            // Log the payload being sent
+            console.log("Sending order item:", {
+              order,
+              menu,
+              quantity,
+              price,
+            });
 
-      // Clear the cart after successful order creation
-      clearCart();
+            return axios.post(
+              `${BASE_URL}/orderitems/`,
+              { order, menu, quantity, price }, // Send destructured data
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
+          })
+        );
 
-      // Navigate to orders page
-      navigate("/orders");
+        // Clear the cart after successful order creation
+        // clearCart();
+
+        // Navigate to orders page
+        navigate("/orders");
+      } catch (error) {
+        console.error("Error during checkout:", error);
+        alert("An error occurred during checkout. Please try again.");
+      }
     } catch (error) {
       console.error("Error during checkout:", error);
       alert("An error occurred during checkout. Please try again.");
@@ -69,6 +92,26 @@ const CheckOut = () => {
       <div className="layout-container flex h-full grow flex-col">
         <div className="px-40 flex flex-1 justify-center py-5">
           <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
+
+            {/* add something in cart */}
+            {cart.length == 0 && <div className="min-h-[400px] flex flex-col items-center justify-center p-8 text-center">
+              <div className="mb-6">
+                <AiOutlineShoppingCart className=" text-colorText h-12 w-12 text-muted-foreground " />
+              </div>
+              <h2 className="text-2xl font-semibold mb-2">Feeling hungry?</h2>
+              <p className="text-muted-foreground mb-6 max-w-sm">
+                It seems like your cart is empty. Go ahead and treat yourself to
+                something delicious!
+              </p>
+              <Link to="/">
+                <button className="btnColored">Go ahead, eat something!</button>
+              </Link>
+            </div>
+}
+
+{ cart.length > 0 &&
+            ( <>
+            
             <div className="flex flex-wrap justify-between gap-3 p-4">
               <div className="flex min-w-72 flex-col gap-3">
                 <p className="text-blackText tracking-light text-[32px] font-bold leading-tight">
@@ -77,7 +120,10 @@ const CheckOut = () => {
               </div>
             </div>
 
+            
+
             {/* Render items in the cart */}
+
             {cart.map((item) => (
               <div key={item.id} className="p-4">
                 <div className="flex items-stretch justify-between gap-4 rounded-xl">
@@ -191,6 +237,11 @@ const CheckOut = () => {
                 </button>
               </div>
             </div>
+            </>
+            )
+
+}
+
           </div>
         </div>
       </div>

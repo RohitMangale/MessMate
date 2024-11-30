@@ -8,11 +8,6 @@ import Dashboard from "./Dashboard";
 import ProfileCard from "./ProfileCard";
 
 
-
-
-
-
-
 const MessPage = () => {
 
     const [tab, setTab] = useState("orders");

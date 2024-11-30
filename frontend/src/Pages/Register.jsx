@@ -40,7 +40,7 @@ const Register = () => {
       username: formData.username,
       email: formData.email,
       password: formData.password,
-      role_input: "user", // Add the role here
+      role_input: "mess_staff", // Add the role here
     };
 
     try {
