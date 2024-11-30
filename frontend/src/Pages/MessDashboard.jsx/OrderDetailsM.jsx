@@ -1,76 +1,85 @@
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../../config";
 
 const OrderDetailsM = () => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${BASE_URL}/orders/`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
+        setOrders(response.data); // Assuming response.data is the array of orders
+      } catch (err) {
+        console.error("Error fetching orders:", err);
+        setError("Failed to load orders. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  // Process orders to calculate status progress
+  const getStatusProgress = () => {
+    const totalOrders = orders.length;
+    const statusCounts = orders.reduce(
+      (acc, order) => {
+        acc[order.status] = (acc[order.status] || 0) + 1;
+        return acc;
+      },
+      { "In progress": 0, Ready: 0, Completed: 0 } // Default keys with 0 counts
+    );
+
+    const progress = Object.keys(statusCounts).map((status) => ({
+      status,
+      count: statusCounts[status],
+      percentage: totalOrders > 0 ? Math.round((statusCounts[status] / totalOrders) * 100) : 0,
+    }));
+
+    return progress;
+  };
+
+  const statusProgress = getStatusProgress();
 
   return (
     <div>
-
-      {/* <div className="flex gap-3 p-3 flex-wrap pr-4">
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background pl-4 pr-4">
-          <p className="text-blackText text-sm font-medium leading-normal">Pickup</p>
-        </div>
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background pl-4 pr-4">
-          <p className="text-blackText text-sm font-medium leading-normal">Delivery</p>
-        </div>
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background pl-4 pr-4">
-          <p className="text-blackText text-sm font-medium leading-normal">Dine-in</p>
-        </div>
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background pl-4 pr-4">
-          <p className="text-blackText text-sm font-medium leading-normal">Pre-order</p>
-        </div>
-      </div> */}
-      {/* <h3 className="text-blackText text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Quick filters</h3>
-      <div className="flex gap-3 p-3 overflow-x-hidden">
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background pl-4 pr-4">
-          <p className="text-blackText text-sm font-medium leading-normal">Urgent</p>
-        </div>
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background pl-4 pr-4">
-          <p className="text-blackText text-sm font-medium leading-normal">Ready</p>
-        </div>
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background pl-4 pr-4">
-          <p className="text-blackText text-sm font-medium leading-normal">Completed</p>
-        </div>
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background pl-4 pr-4">
-          <p className="text-blackText text-sm font-medium leading-normal">Cancelled</p>
-        </div>
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-background pl-4 pr-4">
-          <p className="text-blackText text-sm font-medium leading-normal">Refunded</p>
-        </div>
-      </div> */}
-      <h3 className="text-reddish text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Order status</h3>
-      <div className="flex flex-col gap-3 p-4">
-        <div className="flex gap-6 justify-between">
-          <p className="text-blackText text-base font-medium leading-normal">In progress</p>
-          <p className="text-blackText text-sm font-normal leading-normal">45%</p>
-        </div>
-        <div className="rounded bg-background">
-          <div className="h-2 rounded bg-reddish" style={{ width: '45%' }}></div>
-        </div>
-        <p className="text-colorText text-sm font-normal leading-normal">2 of 5 orders</p>
-      </div>
-      <div className="flex flex-col gap-3 p-4">
-        <div className="flex gap-6 justify-between">
-          <p className="text-blackText text-base font-medium leading-normal">Ready</p>
-          <p className="text-blackText text-sm font-normal leading-normal">75%</p>
-        </div>
-        <div className="rounded bg-background">
-          <div className="h-2 rounded bg-reddish" style={{ width: '75%' }}></div>
-        </div>
-        <p className="text-colorText text-sm font-normal leading-normal">1 of 5 orders</p>
-      </div>
-      <div className="flex flex-col gap-3 p-4">
-        <div className="flex gap-6 justify-between">
-          <p className="text-blackText text-base font-medium leading-normal">Completed</p>
-          <p className="text-blackText text-sm font-normal leading-normal">100%</p>
-        </div>
-        <div className="rounded bg-background">
-          <div className="h-2 rounded bg-reddish" style={{ width: '100%' }}></div>
-        </div>
-        <p className="text-colorText text-sm font-normal leading-normal">2 of 5 orders</p>
-      </div>
+      {loading && <p>Loading orders...</p>}
+      {error && <p className="text-red-500">{error}</p>}
+      {!loading && !error && (
+        <>
+          <h3 className="text-reddish text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+            Order Status
+          </h3>
+          {statusProgress.map((progress) => (
+            <div key={progress.status} className="flex flex-col gap-3 p-4">
+              <div className="flex gap-6 justify-between">
+                <p className="text-blackText text-base font-medium leading-normal">{progress.status}</p>
+                <p className="text-blackText text-sm font-normal leading-normal">{progress.percentage}%</p>
+              </div>
+              <div className="rounded bg-background">
+                <div
+                  className="h-2 rounded bg-reddish"
+                  style={{ width: `${progress.percentage}%` }}
+                ></div>
+              </div>
+              <p className="text-colorText text-sm font-normal leading-normal">
+                {progress.count} of {orders.length} orders
+              </p>
+            </div>
+          ))}
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default OrderDetailsM
+export default OrderDetailsM;
