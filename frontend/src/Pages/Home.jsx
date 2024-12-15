@@ -1,5 +1,5 @@
-import FilterBox from "../componenets/FilterBox";
-import HomePageSections from "../componenets/HomePageSections";
+import FilterBox from "../components/FilterBox";
+import HomePageSections from "../components/HomePageSections";
 
 const Home = () => {
   return (
