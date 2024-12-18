@@ -18,7 +18,7 @@ const orderlist = [
     id: "123455",
     items: 3,
     status: "Completed",
-    img: "https://cdn.usegalileo.ai/stability/934464b5-541f-4462-a71f-16d31f5ed574.png",
+    img: "https://cdn.usegalileo.ai/sdxl10/4a7e11be-2edb-4e1e-af3d-804d36d52137.png",
   },
   {
     id: "123454",
@@ -78,6 +78,7 @@ const Orders = () => {
           console.log("Polling completed. Stopping polling...");
           toast.success("Order completed successfully!");
           localStorage.removeItem("order"); // Clear order from localStorage
+          localStorage.removeItem("currentOrderID"); // Clear order from localStorage
           clearCart(); // Clear the cart
           clearInterval(pollingRef.current); // Stop polling
           isPollingActive.current = false; // Mark polling as inactive

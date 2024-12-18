@@ -1,6 +1,7 @@
 
 import{ useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import acai_bowl from '../../assets/acai_bowl.png'
 import axios from "axios";
 import { BASE_URL } from "../../config";
 import { Line } from "react-chartjs-2";
@@ -41,7 +42,7 @@ const foodItems = [
     ingredients: ["Avocado", "Bread", "Olive Oil", "Salt"],
   },
   {
-    img: "https://cdn.usegalileo.ai/stability/934464b5-541f-4462-a71f-16d31f5ed574.png",
+    img: acai_bowl,
     name: "Acai Bowl",
     price: "$9.99",
     tags: "Breakfast",

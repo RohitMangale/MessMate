@@ -1,8 +1,28 @@
 import { Link } from "react-router-dom";
+import logoutIcon from "../assets/logout.png";
 import { useAuth } from "../contexts/AuthContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const {role,authToken} = useAuth();
+  const { role, authToken,setAuthToken, setRole } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    // Clear localStorage
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("role");
+
+    // Clear AuthContext
+    setAuthToken(null);
+    setRole(null);
+
+    // Redirect to login page
+    toast.success("Logged out successfully!");
+    navigate("/login");
+  };
+
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-background px-10 py-3">
       <div className="flex items-center gap-8">
@@ -76,10 +96,8 @@ const Navbar = () => {
         </div> */}
         {role && authToken ? (
           <div className="flex gap-2">
-
-            {
-              role === 'user' && (
-                <Link to='/checkout' className="iconSoft">
+            {role === "user" && (
+              <Link to="/checkout" className="iconSoft">
                 <div
                   className="text-blackText"
                   data-icon="ShoppingCartSimple"
@@ -97,11 +115,12 @@ const Navbar = () => {
                   </svg>
                 </div>
               </Link>
-              )
-            }
+            )}
 
-
-            <Link to={`${role === 'user' ? '/userdashboard'  : '/messdashboard'}`} className="iconSoft">
+            <Link
+              to={`${role === "user" ? "/userdashboard" : "/messdashboard"}`}
+              className="iconSoft"
+            >
               <div
                 className="text-blackText"
                 data-icon="User"
@@ -119,12 +138,18 @@ const Navbar = () => {
                 </svg>
               </div>
             </Link>
+
+            <button onClick={handleLogout} >
+            <div  className=" iconSoft ">
+
+
+            <img src={logoutIcon} className=" w-[20px] h-[20px] " alt="" />
+            </div>
+
+            </button>
           </div>
         ) : (
-          <Link
-            to="/login"
-            className="btnColored"
-          >
+          <Link to="/login" className="btnColored">
             <span className="truncate">Login</span>
           </Link>
         )}

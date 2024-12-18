@@ -1,6 +1,9 @@
+import acai_bowl from '../../assets/acai_bowl.png'
+import avocado from '../../assets/avocado_toast.png'
+
 const foodItems = [
   {
-    img: "https://cdn.usegalileo.ai/stability/b5ff7d3a-b8a5-4dd3-9809-85efaac70cdd.png",
+    img: avocado,
     name: "Avocado Toast",
     price: "$12.99",
     tags: "Breakfast, Vegan",
@@ -9,7 +12,7 @@ const foodItems = [
     ingredients: ["Avocado", "Bread", "Olive Oil", "Salt"],
   },
   {
-    img: "https://cdn.usegalileo.ai/stability/934464b5-541f-4462-a71f-16d31f5ed574.png",
+    img: acai_bowl,
     name: "Acai Bowl",
     price: "$9.99",
     tags: "Breakfast",

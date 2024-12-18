@@ -31,7 +31,7 @@ body{
       rgba(0, 0, 0, 0.1) 0%,
       rgba(0, 0, 0, 0.4) 100%
     ),
-    url("https://cdn.usegalileo.ai/stability/13cb830b-5aca-42ba-84b6-1c3b6fda6d04.png");
+    url("./assets/homeBg.png");
 }
 
 .scrollable-grid {

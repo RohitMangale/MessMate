@@ -3,14 +3,20 @@ import { Link } from "react-router-dom";
 import starIcon from "../assets/Star.png";
 import { BASE_URL } from "../config";
 import { useOrder } from "../contexts/OrderContext"; // Import the OrderContext
+import { toast } from "react-toastify";
 
 const FilterBox = () => {
   const [foodItems, setFoodItems] = useState([]); // State for menu items
   const [loading, setLoading] = useState(true); // State for loading
   const [error, setError] = useState(null); // State for error handling
 
-  const { addToCart } = useOrder(); // Use the addToCart function from OrderContext
+  const { addToCart } = useOrder(); 
+  // Use the addToCart function from OrderContext
+  // const handleAddToCart = () => {
+    
+  //   toast.success("Added to cart") // Pass full item object
 
+  // }
   // Fetch menu items from API
   useEffect(() => {
     const fetchMenu = async () => {

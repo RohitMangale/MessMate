@@ -71,6 +71,8 @@ export const OrderProvider = ({ children }) => {
 
   const removeFromCart = (id) => {
     dispatch({ type: "REMOVE_FROM_CART", payload: id });
+    toast.success("Removed from cart") // Pass full item object
+
   };
 
   const updateQuantity = (id, quantity) => {
